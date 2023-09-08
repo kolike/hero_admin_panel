@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { heroesFilterApplying } from '../../actions';
+import { heroesFilterApplying } from './filtersSlice';
 // Задача для этого компонента:
 // Фильтры должны формироваться на основании загруженных данных
 // Фильтры должны отображать только нужных героев при выборе

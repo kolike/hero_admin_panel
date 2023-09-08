@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { heroAdding } from '../../actions';
+import { heroAdding } from '../heroesList/heroesSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const HeroesAddForm = () => {

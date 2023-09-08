@@ -13,34 +13,22 @@
       "element": "water"
     },
     {
-      "id": "60998b13-96fe-4319-836b-62583dd1296e",
-      "name": "123",
-      "description": "321",
+      "id": "e8a098f2-d0be-41ec-ac42-c03ef71b55d5",
+      "name": "eqw",
+      "description": "ewq",
+      "element": ""
+    },
+    {
+      "id": "bf60a799-af40-4c31-831c-86b2577e47fb",
+      "name": "eqw",
+      "description": "ewq",
       "element": "wind"
     },
     {
-      "id": "533b61af-0353-410e-bfe7-5336b6312bb4",
-      "name": "123",
-      "description": "321",
+      "id": "1b1b99ef-b844-4a2b-9fc8-46bcd483b337",
+      "name": "eqw",
+      "description": "ewq",
       "element": "earth"
-    },
-    {
-      "id": "91ee11a3-ac27-44a6-8b1a-fc19b1f83a02",
-      "name": "123",
-      "description": "321",
-      "element": "Я владею элементом..."
-    },
-    {
-      "id": "6a30de35-22f3-405c-92ee-1ad17b27141d",
-      "name": "asd",
-      "description": "asd",
-      "element": "fire"
-    },
-    {
-      "id": "f793425e-4c89-4e19-9b7c-d96aed767aa6",
-      "name": "asd",
-      "description": "asd",
-      "element": "fire"
     }
   ],
   "filters": [
