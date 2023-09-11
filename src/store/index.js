@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import heroes from '../components/heroesList/heroesSlice';
 import filters from '../components/heroesFilters/filtersSlice';
 
@@ -10,14 +10,6 @@ const stringMiddleware = () => (next) => (action) => {
   }
   return next(action);
 };
-
-// const store = createStore(
-//   combineReducers({ heroes, filters }),
-//   compose(
-//     applyMiddleware(ReduxThunk, stringMiddleware),
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-//   ),
-// );
 
 const store = configureStore({
   reducer: { heroes, filters },

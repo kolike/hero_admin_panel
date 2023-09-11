@@ -1,13 +1,21 @@
+import { useHttp } from '../../hooks/http.hook';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { heroAdding } from '../heroesList/heroesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import store from '../../store';
+
+import { selectAll } from '../heroesFilters/filtersSlice';
+import { heroAdding } from '../heroesList/heroesSlice';
 
 const HeroesAddForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [element, setElement] = useState('');
+
+  const { filtersLoadingStatus } = useSelector((state) => state.filters);
+  const filters = selectAll(store.getState());
   const dispatch = useDispatch();
+  const { request } = useHttp();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -18,31 +26,52 @@ const HeroesAddForm = () => {
       element,
     };
 
-    fetch('http://localhost:3001/heroes/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newHero),
-    });
+    request('http://localhost:3001/heroes', 'POST', JSON.stringify(newHero))
+      .then((res) => console.log(res, 'Отправка успешна'))
+      .then(dispatch(heroAdding(newHero)))
+      .catch((err) => console.log(err));
 
-    dispatch(heroAdding(newHero));
+    setName('');
+    setDescription('');
+    setElement('');
+  };
+
+  const renderFilters = (filters, status) => {
+    if (status === 'loading') {
+      return <option>Загрузка элементов</option>;
+    } else if (status === 'error') {
+      return <option>Ошибка загрузки</option>;
+    }
+
+    if (filters && filters.length > 0) {
+      return filters.map(({ name, label }) => {
+        // eslint-disable-next-line
+        if (name === 'all') return;
+
+        return (
+          <option key={name} value={name}>
+            {label}
+          </option>
+        );
+      });
+    }
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="border p-4 shadow-lg rounded">
+    <form className="border p-4 shadow-lg rounded" onSubmit={onSubmitHandler}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label fs-4">
           Имя нового героя
         </label>
         <input
-          onChange={(e) => setName(e.target.value)}
           required
           type="text"
           name="name"
           className="form-control"
           id="name"
           placeholder="Как меня зовут?"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -51,13 +80,14 @@ const HeroesAddForm = () => {
           Описание
         </label>
         <textarea
-          onChange={(e) => setDescription(e.target.value)}
           required
           name="text"
           className="form-control"
           id="text"
           placeholder="Что я умею?"
           style={{ height: '130px' }}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
@@ -70,13 +100,11 @@ const HeroesAddForm = () => {
           className="form-select"
           id="element"
           name="element"
+          value={element}
           onChange={(e) => setElement(e.target.value)}
         >
-          <option>Я владею элементом...</option>
-          <option value="fire">Огонь</option>
-          <option value="water">Вода</option>
-          <option value="wind">Ветер</option>
-          <option value="earth">Земля</option>
+          <option value="">Я владею элементом...</option>
+          {renderFilters(filters, filtersLoadingStatus)}
         </select>
       </div>
 
